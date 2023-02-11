@@ -20,7 +20,8 @@ import keyboard
 import time
 
 
-AUTO_STOP = 600
+AUTO_STOP = 600  # Auto stopt ime in seconds
+OFFSET = 77  # offset from the center
 
 
 def main():
@@ -30,25 +31,23 @@ def main():
 
     print("*** Start CS:GO Auto-clicker. ***\n")
 
-    # Get the current time and the time 10 minutes in the future
-    current_time = time.time()
-    end_time = current_time + AUTO_STOP
-
+    current_time = time.time()  # Get the current time
+    end_time = current_time + AUTO_STOP  # time 10 minutes in the future
     screen_width, screen_height = pyautogui.size()  # Get the resolution of the screen
+
     print("Screen Resolution:", screen_width, "x", screen_height)
     print(f"AUTO_STOP after {AUTO_STOP} seconds.\n")
 
-    # Calculate the center of the screen
-    center_x, center_y = screen_width / 2, screen_height / 2
+    center_x, center_y = screen_width / 2, (screen_height / 2) - OFFSET  # Calculate the center of the screen
 
-    # Continuously move the mouse to the center of the screen
     try:
         i = 1
         while True:
             print(f"\r{i}th Click! Press 'F11' to stop...", end='', flush=True)
-            pyautogui.moveTo(center_x, center_y)
-
-            if keyboard.is_pressed('f11') or time.time() >= end_time:
+            
+            pyautogui.moveTo(center_x, center_y)  # move the mouse to the center of the screen
+            pyautogui.click()  # click
+            if keyboard.is_pressed('f11') or time.time() >= end_time:  # F11 for break
                 break
             i += 1
 
