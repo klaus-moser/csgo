@@ -21,7 +21,7 @@ import time
 
 
 AUTO_STOP = 600  # Auto stopt ime in seconds
-OFFSET = 77  # offset from the center
+OFFSET = 82  # offset from the center
 
 
 def main():
@@ -44,7 +44,7 @@ def main():
         i = 1
         while True:
             print(f"\r{i}th Click! Press 'F11' to stop...", end='', flush=True)
-            
+
             pyautogui.moveTo(center_x, center_y)  # move the mouse to the center of the screen
             pyautogui.click()  # click
             if keyboard.is_pressed('f11') or time.time() >= end_time:  # F11 for break
