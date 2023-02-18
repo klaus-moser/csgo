@@ -9,16 +9,13 @@
 
 """ CS:GO-Clicker """
 
-
 __version__ = "1.0"
 __author__ = "github.com/klaus-moser"
-
 
 import pyautogui
 import sys
 import keyboard
 import time
-
 
 AUTO_STOP = 600  # Auto stopt ime in seconds
 OFFSET = 82  # offset from the center
@@ -46,7 +43,11 @@ def main():
             print(f"\r{i}th Click! Press 'F11' to stop...", end='', flush=True)
 
             pyautogui.moveTo(center_x, center_y)  # move the mouse to the center of the screen
+            pyautogui.moveTo(center_x + 5, center_y)  # move the mouse + 5 px
+            pyautogui.click()
+            pyautogui.moveTo(center_x - 5, center_y)  # move the mouse - 5 px
             pyautogui.click()  # click
+
             if keyboard.is_pressed('f11') or time.time() >= end_time:  # F11 for break
                 break
             i += 1
