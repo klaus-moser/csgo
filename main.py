@@ -9,16 +9,15 @@
 
 """ CS:GO-Clicker """
 
-__version__ = "1.0"
+__version__ = "1.1"
 __author__ = "github.com/klaus-moser"
 
 import pyautogui
 import sys
 import keyboard
-import time
 
-AUTO_STOP = 600  # Auto stopt ime in seconds
-OFFSET = 82  # offset from the center
+
+OFFSET_PERCENT = 0.08333  # offset percentage of pixel of the 'ACCEPT' button
 
 
 def main():
@@ -28,27 +27,30 @@ def main():
 
     print("*** Start CS:GO Auto-clicker. ***\n")
 
-    current_time = time.time()  # Get the current time
-    end_time = current_time + AUTO_STOP  # time 10 minutes in the future
     screen_width, screen_height = pyautogui.size()  # Get the resolution of the screen
 
-    print("Screen Resolution:", screen_width, "x", screen_height)
-    print(f"AUTO_STOP after {AUTO_STOP} seconds.\n")
+    print(f"Screen Resolution:\t{screen_width} x {screen_height}")
+    print(f"Screen Center:\t\t{(int(screen_width/2), int(screen_height/2))}")
+    print(f"Offset:\t\t\t\t{int(screen_height * OFFSET_PERCENT)}px")
 
-    center_x, center_y = screen_width / 2, (screen_height / 2) - OFFSET  # Calculate the center of the screen
+    center_x, center_y = screen_width / 2, (screen_height / 2) - int(screen_height * OFFSET_PERCENT)  # calculation
+
+    print(f"Button center:\t\t{(int(center_x), int(center_y))}\n")
 
     try:
         i = 1
         while True:
-            print(f"\r{i}th Click! Press 'F11' to stop...", end='', flush=True)
 
-            pyautogui.moveTo(center_x, center_y)  # move the mouse to the center of the screen
-            pyautogui.moveTo(center_x + 5, center_y)  # move the mouse + 5 px
-            pyautogui.click()
-            pyautogui.moveTo(center_x - 5, center_y)  # move the mouse - 5 px
+            if i % 2 == 0:
+                pyautogui.moveTo(center_x + 5, center_y)  # move the mouse + 5px
+            else:
+                pyautogui.moveTo(center_x - 5, center_y)  # move the mouse - 5px
+
             pyautogui.click()  # click
 
-            if keyboard.is_pressed('f11') or time.time() >= end_time:  # F11 for break
+            print(f"\r{i}th Click! Press 'F11' to stop...", end='', flush=True)
+
+            if keyboard.is_pressed('f11'):  # 'F11' to break loop
                 break
             i += 1
 
